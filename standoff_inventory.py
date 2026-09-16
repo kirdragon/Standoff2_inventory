@@ -1,6 +1,19 @@
 import random
 
 
+def show_market(market):
+    output = "\nДобро пожаловать на рынок!\nНа данный момент рынок таков:\n\n"
+    raruties = ["Nameless", "Arcane", "Legendary", "Epic", "Rare"]
+    for rarity in raruties:
+        output += f"{rarity}:"
+        for item in market:
+            if item["Rarity"] == rarity:
+                output += f"\n{item['Name']} {item['Category'] if item['Category'] == 'Stattrack' else ''} - {item['Price']} голды"
+        output += "\n\n"
+    output = output[:-2]
+    return output
+
+
 def show_inventory(inventory):
     output = ""
     if not any(inventory.values()):
@@ -282,7 +295,8 @@ while True:
         f"\nТвой баланс составляет {balance} голды!\n"
         "1. Сыграть катку\n"
         "2. Посмотреть инвентарь\n"
-        "3. Выйти"
+        "3. Рынок\n"
+        "4. Выйти"
     )
     choice = int(input("Твой выбор: "))
     output = ""
@@ -338,6 +352,8 @@ while True:
     elif choice == 2:
         print(show_inventory(inventory))
     elif choice == 3:
+        print(show_market(market))
+    elif choice == 4:
         exit_choice = str(
             input("Ты уверен, что хочешь выйти? Весь твой инвентарь будет стерт!\n")
         )
