@@ -1,5 +1,39 @@
 import random
 
+market = [
+    [
+        {
+            "Name": "Karambit Gold",
+            "Rarity": "Nameless",
+            "Collection": "Nameless",
+            "Price": 150000,
+        },
+        {
+            "Name": "AWM treasure Hunter",
+            "Rarity": "Nameless",
+            "Collection": "Nameless",
+            "Price": 110000,
+        },
+        {
+            "Name": "AWM Sport V2",
+            "Rarity": "Nameless",
+            "Collection": "Nameless",
+            "Price": 80000,
+        },
+        {
+            "Name": "USP Genesis",
+            "Rarity": "Nameless",
+            "Collection": "Nameless",
+            "Price": 55000,
+        },
+        {
+            "Name": "G22",
+            "Rarity": "Nameless",
+            "Collection": "Nameless",
+            "Price": 38000,
+        },
+    ]
+]
 inventory = {
     "Nameless": [],
     "Arcane": [],
