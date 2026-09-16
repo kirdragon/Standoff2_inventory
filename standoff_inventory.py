@@ -355,9 +355,14 @@ while True:
         print(show_market(market))
     elif choice == 4:
         exit_choice = str(
-            input("Ты уверен, что хочешь выйти? Весь твой инвентарь будет стерт!\n")
+            input(
+                "Ты уверен, что хочешь выйти? Весь твой инвентарь будет стерт!\n"
+                "Напиши 'Да'или 'Нет': "
+            )
         )
-        if exit_choice == "да" or exit_choice == "Да":
+        while exit_choice != "Да" and exit_choice != "Нет":
+            exit_choice = str(input("Введи 'Да' или 'Нет': "))
+        if exit_choice == "Да":
             print("До скорых встреч...")
             break
         else:
