@@ -1,5 +1,35 @@
 import random
 
+
+def show_inventory(inventory):
+    output = ""
+    if not any(inventory.values()):
+        return "Твой инвентарь пуст!"
+    else:
+        print("Твой инвентарь содержит:")
+        if inventory["Nameless"]:
+            output += "Из коллекции Nameless у тебя есть: "
+        for i, skin in enumerate(inventory["Nameless"]):
+            output += f"{inventory['Nameless'][i]}; "
+        if inventory["Arcane"]:
+            output += "\nИз коллекции Arcane у тебя есть: "
+        for i, skin in enumerate(inventory["Arcane"]):
+            output += f"{inventory['Arcane'][i]};"
+        if inventory["Legendary"]:
+            output += "\nИз коллекции Legendary у тебя есть: "
+        for i, skin in enumerate(inventory["Legendary"]):
+            output += f"{inventory['Legendary'][i]}; "
+        if inventory["Epic"]:
+            output += "\nИз коллекции Epic у тебя есть: "
+        for i, skin in enumerate(inventory["Epic"]):
+            output += f"{inventory['Epic'][i]}; "
+        if inventory["Rare"]:
+            output += "\nИз коллекции Rare у тебя есть: "
+        for i, skin in enumerate(inventory["Rare"]):
+            output += f"{inventory['Rare'][i]}; "
+        return output
+
+
 market = [
     {
         "Name": "Karambit Gold",
@@ -306,29 +336,7 @@ while True:
                 balance += lucky_golds[3]
                 print(f"За удачу ты получаешь: {golds_amount} голды")
     elif choice == 2:
-        print("Твой инвентарь содержит:")
-        if inventory["Nameless"]:
-            output += "Из коллекции Nameless у тебя есть: "
-        for i, skin in enumerate(inventory["Nameless"]):
-            output += f"{inventory['Nameless'][i]}; "
-        if inventory["Arcane"]:
-            output += "\nИз коллекции Arcane у тебя есть: "
-        for i, skin in enumerate(inventory["Arcane"]):
-            output += f"{inventory['Arcane'][i]};"
-        if inventory["Legendary"]:
-            output += "\nИз коллекции Legendary у тебя есть: "
-        for i, skin in enumerate(inventory["Legendary"]):
-            output += f"{inventory['Legendary'][i]}; "
-        if inventory["Epic"]:
-            output += "\nИз коллекции Epic у тебя есть: "
-        for i, skin in enumerate(inventory["Epic"]):
-            output += f"{inventory['Epic'][i]}; "
-        if inventory["Rare"]:
-            output += "\nИз коллекции Rare у тебя есть: "
-        for i, skin in enumerate(inventory["Rare"]):
-            output += f"{inventory['Rare'][i]}; "
-
-        print(output)
+        print(show_inventory(inventory))
     elif choice == 3:
         exit_choice = str(
             input("Ты уверен, что хочешь выйти? Весь твой инвентарь будет стерт!\n")
