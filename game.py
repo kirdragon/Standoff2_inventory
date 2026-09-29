@@ -1,4 +1,5 @@
 import random
+from skins import market
 
 from player import Player
 
@@ -10,6 +11,7 @@ class Game:
     lucky_chances = ["skin", "gold"]
     games = ["win", "lose"]
     lucky_golds = [1000, 100, 50, 20]
+    categories = ["regular", "stattrack", "knife"]
 
     def __init__(self, player: Player):
         self.player = player
@@ -29,10 +31,22 @@ class Game:
                 self.skins_drop_rarity, weights=[5, 10, 15, 20, 50]
             )[0]
             if lucky_skin == "Nameless":
-                self.skins_drop_rarity["Nameless"].append("Кер Голд")
+                nameless_skin = random.choice(market[:4])
+                self.player.inventory.add_skin(nameless_skin)
 
             elif lucky_skin == "Arcane":
-                self.skins_drop_rarity["Arcane"].append("М4 Самурай")
+                arcane_category = random.choice(self.categories, weights=[70, 20, 10])
+                if arcane_category == "regular":
+                    arcane_skin = random.choice(market[6, 12])
+                    self.player.inventory.add_skin(arcane_skin)
+
+                elif arcane_category == "stattrack":
+                    arcane_skin = random.choice(market[5], market[11])
+                    self.player.inventory.add_skin(arcane_skin)
+
+                else:
+                    arcane_skin = random.choice(market[10:7])
+                    self.player.inventory.add_skin(arcane_skin)
 
             elif lucky_skin == "Legendary":
                 self.skins_drop_rarity["Legendary"].append("АКР Некромансер")
@@ -45,14 +59,4 @@ class Game:
 
         if lucky_drop == "gold":
             golds_amount = random.choices(self.lucky_golds, weights=[3, 7, 30, 60])[0]
-            if golds_amount == 1000:
-                balance += self.lucky_golds[0]
-
-            elif golds_amount == 100:
-                balance += self.lucky_golds[1]
-
-            elif golds_amount == 50:
-                balance += self.lucky_golds[2]
-
-            else:
-                balance += self.lucky_golds[3]
+            self.player.add_money(golds_amount)
