@@ -1,64 +1,57 @@
-from inventory import Inventory
 from skin import Skin
 from skins import market
 from player import Player
 
-def show_market(market):
+player = Player("Роман", 0)
+
+
+def getString(message):
+    while True:
+        value = input(message).strip()
+        if value:
+            return value
+        print("Ошибка! Значение не может быть пустым!")
+
+
+def getInt(message, min, max):
+    while True:
+        try:
+            value_input = int(input(message))
+            if min <= value_input <= max:
+                return value_input
+            print(f"Ошибка! Введи число от {min} до {max}:")
+        except ValueError:
+            print(f"Ошибка! Введи целое число от {min} до {max}:")
+
+
+def show_market(market: list[Skin]):
     output = "\nДобро пожаловать на рынок!\nНа данный момент рынок таков:\n\n"
     raruties = ["Nameless", "Arcane", "Legendary", "Epic", "Rare"]
     for rarity in raruties:
         output += f"{rarity}:"
         for item in market:
-            if item["Rarity"] == rarity:
-                output += f"\n{item['Name']} {item['Category'] if item['Category'] == 'Stattrack' else ''} - {item['Price']} голды"
+            if item.rarity == rarity:
+                output += f"\n{item.name} {item.category if item.category == 'Stattrack' else ''} - {item.price} голды"
         output += "\n\n"
     output = output[:-2]
     return output
 
 
-def show_inventory(inventory):
-    output = ""
-    if not any(inventory.values()):
-        return "Твой инвентарь пуст!"
-    else:
-        print("Твой инвентарь содержит:")
-        if inventory["Nameless"]:
-            output += "Из коллекции Nameless у тебя есть: "
-        for i, skin in enumerate(inventory["Nameless"]):
-            output += f"{inventory['Nameless'][i]}; "
-        if inventory["Arcane"]:
-            output += "\nИз коллекции Arcane у тебя есть: "
-        for i, skin in enumerate(inventory["Arcane"]):
-            output += f"{inventory['Arcane'][i]};"
-        if inventory["Legendary"]:
-            output += "\nИз коллекции Legendary у тебя есть: "
-        for i, skin in enumerate(inventory["Legendary"]):
-            output += f"{inventory['Legendary'][i]}; "
-        if inventory["Epic"]:
-            output += "\nИз коллекции Epic у тебя есть: "
-        for i, skin in enumerate(inventory["Epic"]):
-            output += f"{inventory['Epic'][i]}; "
-        if inventory["Rare"]:
-            output += "\nИз коллекции Rare у тебя есть: "
-        for i, skin in enumerate(inventory["Rare"]):
-            output += f"{inventory['Rare'][i]}; "
-        return output
-    
 print("\nДобро пожаловать в симулятор инвентаря и рынка в стендофф 2!")
 while True:
     print(
-        f"\nТвой баланс составляет {balance} голды!\n"
+        f"\nТвой баланс составляет {player.balance} голды!\n"
         "1. Сыграть катку\n"
         "2. Посмотреть инвентарь\n"
         "3. Рынок\n"
         "4. Выйти"
     )
-    choice = int(input("Твой выбор: "))
+    choice = getInt("Выбор: ", 1, 4)
     output = ""
     if choice == 1:
-        
+        pass
     elif choice == 2:
-        print(show_inventory())
+        print(player.inventory.show_skins())
     elif choice == 3:
         print(show_market(market))
     elif choice == 4:
