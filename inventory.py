@@ -1,19 +1,34 @@
+from skin import Skin
+
+
 class Inventory:
     def __init__(self):
-        self.skins = []
+        self.skins: list[Skin] = []
 
-    def add_skin(self, skin):
+    def add_skin(self, skin: Skin):
         self.skins.append(skin)
 
-    def remove_skin(self, skin):
+    def remove_skin(self, skin: Skin):
         self.skins.remove(skin)
 
     def show_skins(self):
-        for skin in self.skins:
-            print(
-                f"{skin.name} | "
-                f"{skin.rarity} | "
-                f"{skin.collection} | "
-                f"{skin.category} | "
-                f"{skin.price}"
-            )
+        if not self.skins:
+            return "Твой инвентарь пуст!"
+
+        output = ""
+        rarities = ["Nameless", "Arcane", "Legendary", "Epic", "Rare"]
+
+        for rarity in rarities:
+            rarity_skins = [skin for skin in self.skins if skin.rarity == rarity]
+
+            if not rarity_skins:
+                continue
+
+            output += f"\nИз {rarity} у тебя есть:\n\n"
+
+            for i, skin in enumerate(rarity_skins, 1):
+                category = "Stattrack" if skin.category == "Stattrack" else ""
+
+                output += f"{i}. {skin.name} {category} " f"- {skin.price} голды\n"
+
+        return output.rstrip()
