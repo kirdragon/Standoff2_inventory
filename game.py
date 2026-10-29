@@ -1,6 +1,6 @@
 import random
 from skins import market
-
+from skin import Skin
 from player import Player
 
 
@@ -39,7 +39,7 @@ class Game:
         if game_result == "Lose":
             game_drop = random.choices(self.drop_for_game, weights=[1, 4, 15, 80])[0]
         else:
-            game_drop = random.choices(self.drop_for_game, weights=[2, 8, 20, 80])[0]
+            game_drop = random.choices(self.drop_for_game, weights=[2, 8, 20, 70])[0]
         return game_drop
 
     def _get_luck_gold_drop(self):
@@ -63,13 +63,13 @@ class Game:
             self.answer += f"Ты выиграл, и за свою игру получаешь {game_drop} голды!\n"
         luck_type_drop = self._get_luck_type_drop()
         if luck_type_drop == "Gold":
-            luck_drop = self._get_luck_gold_drop()
+            luck_drop: int = self._get_luck_gold_drop()
             self.player.add_money(luck_drop)
             self.answer += f"За удачу ты получаешь {luck_drop} голды!"
         else:
             skin_rarity = self._get_skin_rarity()
             skin_category = self._get_skin_category(skin_rarity)
-            luck_drop = self._get_specific_skin(skin_category, skin_rarity)
+            luck_drop: Skin = self._get_specific_skin(skin_category, skin_rarity)
             self.player.inventory.add_skin(luck_drop)
-            self.answer += f"За удачу ты получаешь {luck_drop.name}"
+            self.answer += f"За удачу ты получаешь {luck_drop.name} {luck_drop.category if luck_drop.category == "Stattrack" else ''}"
         return self.answer

@@ -1,8 +1,10 @@
 from skin import Skin
 from skins import market
 from player import Player
+from game import Game
 
 player = Player("Роман", 0)
+game = Game(player)
 
 
 def getString(message):
@@ -49,7 +51,7 @@ while True:
     choice = getInt("Выбор: ", 1, 4)
     output = ""
     if choice == 1:
-        pass
+        print(game.play())
     elif choice == 2:
         print(player.inventory.show_skins())
     elif choice == 3:
