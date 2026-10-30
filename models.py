@@ -42,7 +42,7 @@ class SkinRecord(Base):
     name: Mapped[str] = mapped_column(String)
     price: Mapped[int] = mapped_column()
 
-    rarity_id: Mapped[int] = mapped_column(ForeignKey("Rarites.id"))
+    rarity_id: Mapped[int] = mapped_column(ForeignKey("Rarities.id"))
     collection_id: Mapped[int] = mapped_column(ForeignKey("Collections.id"))
     category_id: Mapped[int] = mapped_column(ForeignKey("Categories.id"))
 

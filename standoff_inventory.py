@@ -1,10 +1,11 @@
 from skin import Skin
-from skins import market
+from market import load_market
 from player import Player
 from game import Game
 
+market = load_market()
 player = Player("Роман", 0)
-game = Game(player)
+game = Game(player, market)
 
 
 def getString(message):
@@ -33,7 +34,7 @@ def show_market(market: list[Skin]):
         output += f"{rarity}:"
         for item in market:
             if item.rarity == rarity:
-                output += f"\n{item.name} {item.category if item.category == 'Stattrack' else ''} - {item.price} голды"
+                output += f"\n{item.name} {item.category if item.category == 'StatTrack' else ''} - {item.price} голды"
         output += "\n\n"
     output = output[:-2]
     return output

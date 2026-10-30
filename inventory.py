@@ -27,7 +27,7 @@ class Inventory:
             output += f"\nИз {rarity} у тебя есть:\n\n"
 
             for i, skin in enumerate(rarity_skins, 1):
-                category = "Stattrack" if skin.category == "Stattrack" else ""
+                category = "StatTrack" if skin.category == "StatTrack" else ""
 
                 output += f"{i}. {skin.name} {category} " f"- {skin.price} голды\n"
 
