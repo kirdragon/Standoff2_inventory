@@ -8,6 +8,16 @@ player = Player("Роман", 0)
 game = Game(player, market)
 
 
+def getYesorNo(message):
+    print(message)
+    while True:
+        choice = input()
+        if choice != "Да" and choice != "Нет":
+            print('Введи либо "Да", либо "Нет"')
+        else:
+            return choice
+
+
 def getString(message):
     while True:
         value = input(message).strip()
@@ -47,9 +57,11 @@ while True:
         "1. Сыграть катку\n"
         "2. Посмотреть инвентарь\n"
         "3. Рынок\n"
-        "4. Выйти"
+        "4. Купить скин\n"
+        "5. Продать скин\n"
+        "6. Выйти"
     )
-    choice = getInt("Выбор: ", 1, 4)
+    choice = getInt("Выбор: ", 1, 6)
     output = ""
     if choice == 1:
         print(game.play())
@@ -58,14 +70,16 @@ while True:
     elif choice == 3:
         print(show_market(market))
     elif choice == 4:
-        exit_choice = str(
-            input(
-                "Ты уверен, что хочешь выйти? Весь твой инвентарь будет стерт!\n"
-                "Напиши 'Да'или 'Нет': "
-            )
+        print(show_market(market))
+        name = getString("Напиши название скина, который хочешь купить: ")
+
+    elif choice == 5:
+        pass
+    elif choice == 6:
+        exit_choice = getYesorNo(
+            "Ты уверен, что хочешь выйти? Весь твой инвентарь будет стерт!\n"
+            'Напиши "Да"или "Нет": '
         )
-        while exit_choice != "Да" and exit_choice != "Нет":
-            exit_choice = str(input("Введи 'Да' или 'Нет': "))
         if exit_choice == "Да":
             print("До скорых встреч...")
             break
