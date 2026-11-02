@@ -1,5 +1,5 @@
 import random
-from skin import Skin
+from models import SkinRecord
 from player import Player
 
 
@@ -12,7 +12,7 @@ class Game:
     lucky_golds = [1000, 100, 50, 20]
     categories = ["Regular", "StatTrack", "Knife"]
 
-    def __init__(self, player: Player, market: list[Skin]):
+    def __init__(self, player: Player, market: list[SkinRecord]):
         self.player = player
         self.market = market
         self.answer = ""
@@ -49,7 +49,7 @@ class Game:
         skins_list = []
 
         for skin in self.market:
-            if skin.category == category and skin.rarity == rarity:
+            if skin.category.name == category and skin.rarity.name == rarity:
                 skins_list.append(skin)
 
         return random.choice(skins_list)
@@ -71,7 +71,7 @@ class Game:
         else:
             skin_rarity = self._get_skin_rarity()
             skin_category = self._get_skin_category(skin_rarity)
-            luck_drop: Skin = self._get_specific_skin(skin_category, skin_rarity)
-            self.player.inventory.add_skin(luck_drop)
-            self.answer += f"За удачу ты получаешь {luck_drop.name} {luck_drop.category if luck_drop.category == "StatTrack" else ''}"
+            luck_drop: SkinRecord = self._get_specific_skin(skin_category, skin_rarity)
+            self.player.inventory.add_skin(luck_drop.id)
+            self.answer += f"За удачу ты получаешь {luck_drop.name} {luck_drop.category.name if luck_drop.category.name == "StatTrack" else ''}"
         return self.answer

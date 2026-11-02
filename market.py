@@ -1,26 +1,37 @@
 from sqlalchemy import select
+from sqlalchemy.orm import selectinload
 
 from database import SessionLocal
 from models import SkinRecord
-from skin import Skin
 
 
-def load_market() -> list[Skin]:
+def load_market() -> list[SkinRecord]:
     with SessionLocal() as session:
-        statement = select(SkinRecord)
+        statement = select(SkinRecord).options(
+            selectinload(SkinRecord.rarity),
+            selectinload(SkinRecord.collection),
+            selectinload(SkinRecord.category),
+        )
         records = session.scalars(statement).all()
 
-        market = []
+        return records
 
-        for record in records:
-            skin = Skin(
-                record.name,
-                record.rarity.name,
-                record.collection.name,
-                record.category.name,
-                record.price,
+
+def get_skin_by_name(name: str) -> list[SkinRecord] | None:
+    with SessionLocal() as session:
+        statement = (
+            select(SkinRecord)
+            .options(
+                selectinload(SkinRecord.rarity),
+                selectinload(SkinRecord.collection),
+                selectinload(SkinRecord.category),
             )
+            .where(SkinRecord.name == name)
+        )
 
-            market.append(skin)
+        skins = session.scalars(statement).all()
 
-        return market
+        if not skins:
+            return None
+
+        return skins
