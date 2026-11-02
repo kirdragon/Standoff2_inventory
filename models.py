@@ -10,8 +10,8 @@ class Player(Base):
     __tablename__ = "Players"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String)
-    gold: Mapped[float] = mapped_column(Float)
+    username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    gold: Mapped[float] = mapped_column(Float, default=0)
 
 
 class Rarity(Base):
@@ -49,3 +49,16 @@ class SkinRecord(Base):
     rarity: Mapped[Rarity] = relationship()
     collection: Mapped[Collection] = relationship()
     category: Mapped[Category] = relationship()
+
+
+class PlayerInventory(Base):
+    __tablename__ = "Player_inventory"
+
+    player_id: Mapped[int] = mapped_column(ForeignKey("Players.id"), primary_key=True)
+
+    skin_id: Mapped[int] = mapped_column(ForeignKey("Skins.id"), primary_key=True)
+
+    quantity: Mapped[int] = mapped_column(default=1)
+
+    player: Mapped[Player] = relationship()
+    skin: Mapped[SkinRecord] = relationship()
