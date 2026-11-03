@@ -38,9 +38,12 @@ def get_or_create_player(username: str) -> int:
         statement = select(PlayerModel).where(PlayerModel.username == username)
         player = session.scalar(statement)
 
+        is_new = False
+
         if player is None:
             player = PlayerModel(username=username, gold=0)
             session.add(player)
             session.commit()
+            is_new = True
 
-        return player.id
+        return player.id, is_new

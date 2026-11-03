@@ -5,7 +5,16 @@ from models import SkinRecord
 
 market = load_market()
 
-player_id = get_or_create_player("Роман")
+player_name = input("Введите имя пользователя для входа: ")
+
+player_id, is_new = get_or_create_player(player_name)
+
+if is_new:
+    print(f"\nПоздравляем, {player_name}! Ты создал новый аккаунт!")
+
+else:
+    print(f"\nС возвращением, {player_name}!")
+
 player = Player(player_id)
 
 game = Game(player, market)
