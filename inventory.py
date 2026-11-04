@@ -86,3 +86,24 @@ class Inventory:
                     f"(Количество: {item.quantity})\n"
                 )
         return output.rstrip()
+
+    def find_skin(self, name: str):
+        with SessionLocal() as session:
+            statement = (
+                select(PlayerInventory)
+                .join(PlayerInventory.skin)
+                .options(
+                    selectinload(PlayerInventory.skin).selectinload(SkinRecord.rarity),
+                    selectinload(PlayerInventory.skin).selectinload(
+                        SkinRecord.category
+                    ),
+                    selectinload(PlayerInventory.skin).selectinload(
+                        SkinRecord.collection
+                    ),
+                )
+                .where(
+                    PlayerInventory.player_id == self.player_id, SkinRecord.name == name
+                )
+            )
+
+            return session.scalars(statement).all()
