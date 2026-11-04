@@ -170,8 +170,30 @@ while True:
 
     elif choice == 5:
         print(player.inventory.show_skins())
-        print("Продажа скинов пока не реализована.")
+        if player.inventory.show_skins() == "Твой инвентарь пуст!":
+            pass
+        else:
+            num = input(
+                'Введи точное название скина, который хочешь продать, по примеру: "UMP45 "Cyberpunk" StatTrack" : '
+            )
+            skins_list = player.inventory.find_skin(num)
 
+            if not skins_list:
+                print("Скина с таким именем нет в твоем инвентаре!")
+
+            elif len(skins_list) == 1:
+                current_skin = skins_list[0]
+                current_choice = getYesorNo(
+                    f"Ты точно хочешь продать {current_skin.skin.name} за {current_skin.skin.price * 0.8} (с учетом комиссии)?"
+                )
+                if current_choice == "Да":
+                    player.add_money(current_skin.skin.price * 0.8)
+                    player.inventory.remove_skin(current_skin.skin_id)
+                    print(
+                        f"{current_skin.skin.name} успешно продан за {current_skin.skin.price}!"
+                    )
+                else:
+                    print("Тогда не продаем")
     elif choice == 6:
         exit_choice = getYesorNo(
             "Ты уверен, что хочешь выйти? Твой прогресс будет сохранён!\n"
